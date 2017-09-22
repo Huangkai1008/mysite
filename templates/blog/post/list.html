@@ -4,7 +4,7 @@
 {% block content %}
     <h1>黄黄的博客</h1>
     {% if tag %}
-        <h2>Posts tagged with "{{ tag.name }}"</h2>
+        <h2>含有 "{{ tag.name }}"标签的博客</h2>
     {% endif %}
     {% for post in posts %}
         <h2>
@@ -13,7 +13,7 @@
         </a>
         </h2>
         <p class="tags">
-        Tags:
+        标签
         {% for tag in post.tags.all %}
             <a href="{% url "blog:post_list_by_tag" tag.slug %}">
             {{ tag.name }}

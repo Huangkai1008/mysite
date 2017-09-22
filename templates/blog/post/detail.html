@@ -13,23 +13,23 @@
     {{ post.body|markdown }}
     <p>
   <a href="{% url "blog:post_share" post.id %}">
-    Share this post
+   分享
   </a>
    </p>
 {#    添加评论总数   #}
     {% with comments.count as total_comments %}
         <h2>
-        {{ total_comments }} comment {{ total_comments|pluralize }}
+        {{ total_comments }} 条评论 {{ total_comments|pluralize }}
         </h2>
     {% endwith %}
 {#    加入聚合整合tag列表   #}
-    <h2>Similar posts</h2>
+    <h2>相似的博客内容</h2>
     {% for post in similar_posts %}
         <p>
         <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         </p>
         {% empty %}
-        There are no similar posts yet.
+        没有相似的博客
     {% endfor %}
 {#    加入评论列表  #}
     {% for comment in comments %}
@@ -41,17 +41,17 @@
         {{ comment.body|linebreaks }}
         </div>
     {% empty %}
-        <p>There are no comments yet</p>
+        <p>还没有评论</p>
     {% endfor %}
 {#    显示成功信息替代之前的内容   #}
     {% if new_comment %}
-        <h2>Your comment has been added</h2>
+        <h2>你的评论已经被成功添加</h2>
     {% else %}
-        <h2>Add a new comment</h2>
+        <h2>增加一条新评论</h2>
         <form action="." method="post">
         {{ comment_form.as_p }}
         {% csrf_token %}
-        <p><input type="submit" value="Add comment"></p>
+        <p><input type="submit" value="评论"></p>
         </form>
     {% endif %}
 {% endblock %}

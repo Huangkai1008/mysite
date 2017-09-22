@@ -2,22 +2,22 @@
 {% block title %}Search{% endblock %}
 {% block content %}
     {% if "query" in request.GET %}
-        <h1>Posts containing "{{ cd.query }}"</h1>
-        <h3>Found {{ total_results }} result{{ total_results|pluralize }}</h3>
+        <h1>包含 "{{ cd.query }}"的内容</h1>
+        <h3>找到 {{ total_results }} 条结果{{ total_results|pluralize }}</h3>
         {% for result in results %}
             {% with post=result.object %}
                 <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
                 {{ post.body|truncatewords:5 }}
             {% endwith %}
             {% empty %}
-                <p>There are no results for your query.</p>
+                <p>没有符合查询的内容</p>
         {% endfor %}
         <p><a href="{% url "blog:post_search" %}">Search again</a></p>
     {% else %}
         <h1>Search for posts</h1>
         <form action="." method="get">
             {{ form.as_p }}
-            <input type="submit" value="Search">
+            <input type="submit" value="搜索">
         </form>
     {% endif %}
 {% endblock %}
