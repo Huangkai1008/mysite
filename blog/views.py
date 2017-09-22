@@ -6,6 +6,8 @@ from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.db.models import Count  # Django ORM的聚合函数
+from .forms import EmailPostForm, CommentForm, SearchForm
+from haystack.query import SearchQuerySet
 # Create your views here.
 
 """
@@ -88,3 +90,26 @@ def post_share(request, post_id):
     return render(request, 'blog/post/share.html', {'post': post,
                                                     'form': form,
                                                     'sent': sent})
+
+
+def post_search(request):
+    form = SearchForm()
+    # 预先设置控制否则会报错
+    cd = ''
+    results = ''
+    total_results = ''
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            cd = form.cleaned_data
+            results = SearchQuerySet().models(Post).filter(content=cd['query']).load_all()
+            # count total results
+            total_results = results.count()
+
+    return render(request, 'blog/post/search.html',
+                  {'form': form,
+                   'cd': cd,
+                   'results': results,
+                   'total_results': total_results})
+
+

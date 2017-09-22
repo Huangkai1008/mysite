@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'taggit',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'haystack',
 
 ]
 
@@ -133,3 +134,11 @@ EMAIL_HOST_USER = '1770360848@qq.com'
 EMAIL_HOST_PASSWORD = 'voxwuognamssgfgg'
 EMAIL_USE_TLS = True
 
+
+# haystack定义搜索引擎后端
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr/blog'
+    },
+}
